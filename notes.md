@@ -18,3 +18,10 @@ maps are the objects that preserve order
 
 ## Launches MVC
 Architecture - features like, models usually make sense to be separate from routes and controllers
+
+## Handle client side routing
+-app.get('/', function (req, res) {
++app.get('/*', function (req, res) {
+   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+ });
+ just an * it is so easy
