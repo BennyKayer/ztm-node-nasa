@@ -1,5 +1,5 @@
 const { HttpStatusCode } = require('axios');
-const { getLaunches, addNewLaunch, launchSchema } = require('./launches.models');
+const { getLaunches, addNewLaunch, launchSchema, existsLaunchWithId, deleteLaunch } = require('./launches.models');
 const joi = require("joi")
 
 async function httpGetAllLaunches(req, res) {
@@ -26,7 +26,25 @@ async function httpAddNewLaunch(req, res) {
     
 }
 
+async function httpAbortLaunch(req, res) {
+    try {
+        const launchId = Number(req.params.id);
+
+        if (!existsLaunchWithId(launchId)){
+            return res.status(404).json({
+                error: "Launch not found"
+            })
+        }
+
+        const aborted = deleteLaunch(launchId);
+        return res.status(200).json(aborted)
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+}
+
 module.exports = {
     httpGetAllLaunches,
-    httpAddNewLaunch
+    httpAddNewLaunch,
+    httpAbortLaunch
 }
