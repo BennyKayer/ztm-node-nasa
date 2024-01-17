@@ -17,10 +17,10 @@ async function httpAddNewLaunch(req, res) {
 
         return res.status(HttpStatusCode.Created).json(createdLaunch)
     } catch (error) {
-        if (joi.isError(error)){
-            return res.status(HttpStatusCode.BadRequest).json({status: HttpStatusCode.BadRequest, message: error.details})
-        }
         console.error(error);
+        if (joi.isError(error)){
+            return res.status(HttpStatusCode.BadRequest).json({status: HttpStatusCode.BadRequest, message: JSON.stringify(error.details)})
+        }
         return res.status(500).json({status: 500, message: `Unhandled error: ${error}`})
     }
     
