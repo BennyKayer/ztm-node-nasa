@@ -15,3 +15,6 @@ app.get('', (req, res) => {
 
 # Maps
 maps are the objects that preserve order
+
+## Launches MVC
+Architecture - features like, models usually make sense to be separate from routes and controllers
