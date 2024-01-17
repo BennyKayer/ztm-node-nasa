@@ -10,10 +10,14 @@ const launch = {
     upcoming: true,
     succes: true,
 }
-
 launches.set(launch.flightNumber, launch);
+
+function getLaunches() {
+    return Array.from(launches.values())
+}
+
 // launches.get(100) === launch
 
 module.exports = {
-    launches
+    getLaunches
 }
