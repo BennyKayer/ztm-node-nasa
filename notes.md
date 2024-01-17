@@ -12,3 +12,6 @@ Build creates static files just serve it's index.html
 app.get('', (req, res) => {
     res.sendFile(path.join(__dirname, "..", "fe-build", "index.html"))
 })
+
+# Maps
+maps are the objects that preserve order
