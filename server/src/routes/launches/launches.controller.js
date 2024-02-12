@@ -1,10 +1,9 @@
-const { HttpStatusCode } = require('axios');
 const { getLaunches, addNewLaunch, launchSchema, existsLaunchWithId, deleteLaunch } = require('./launches.models');
 const joi = require("joi")
 
 async function httpGetAllLaunches(req, res) {
     // console.log(Array.from(launches.entries()));
-    return res.status(HttpStatusCode.Ok).json(getLaunches());
+    return res.status(200).json(getLaunches());
 }
 
 async function httpAddNewLaunch(req, res) {
@@ -15,11 +14,11 @@ async function httpAddNewLaunch(req, res) {
         validatedLaunch.launchDate = new Date(newLaunch.launchDate);
         const createdLaunch = addNewLaunch(validatedLaunch)
 
-        return res.status(HttpStatusCode.Created).json(createdLaunch)
+        return res.status(201).json(createdLaunch)
     } catch (error) {
         console.error(error);
         if (joi.isError(error)){
-            return res.status(HttpStatusCode.BadRequest).json({status: HttpStatusCode.BadRequest, message: JSON.stringify(error.details)})
+            return res.status(400).json({status: 400, message: JSON.stringify(error.details)})
         }
         return res.status(500).json({status: 500, message: `Unhandled error: ${error}`})
     }

@@ -7,7 +7,8 @@
     "test": "jest",
     "start": "nodemon src/server.js",
     "startOnPortWin": "set PORT=5000& nodemon src/server.js",
-    "runOnce": "node src/server.js"
+    "runOnce": "node src/server.js",
+    "cluster": "pm2 start src/server.js -i max"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "csv-parse": "^5.5.3",
     "express": "^4.18.2",
     "joi": "^17.11.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pm2": "^5.3.1"
   }
 }
