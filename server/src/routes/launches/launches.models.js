@@ -1,4 +1,5 @@
 const joi = require("joi")
+const { launchesModel } = require("./launches.mongo")
 
 const launchSchema = joi.object({
     mission: joi.string().required(),
