@@ -3,7 +3,7 @@ const joi = require("joi")
 
 async function httpGetAllLaunches(req, res) {
     // console.log(Array.from(launches.entries()));
-    return res.status(200).json(getLaunches());
+    return res.status(200).json(await getLaunches());
 }
 
 async function httpAddNewLaunch(req, res) {
@@ -28,15 +28,23 @@ async function httpAddNewLaunch(req, res) {
 async function httpAbortLaunch(req, res) {
     try {
         const launchId = Number(req.params.id);
+        const existsLaunch = await existsLaunchWithId(launchId)
 
-        if (!existsLaunchWithId(launchId)){
+        if (!existsLaunch){
             return res.status(404).json({
                 error: "Launch not found"
             })
         }
 
-        const aborted = deleteLaunch(launchId);
-        return res.status(200).json(aborted)
+        const aborted = await deleteLaunch(launchId);
+        if (!aborted){
+            return res.status(400).json({
+                error: "Launch not aborted"
+            })
+        }
+        return res.status(200).json({
+            ok: true
+        })
     } catch (error) {
         return res.status(500).json(error)
     }

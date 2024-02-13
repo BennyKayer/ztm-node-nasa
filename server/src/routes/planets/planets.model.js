@@ -41,7 +41,7 @@ async function getAllPlanets() {
     // }, {
     //     "name": 1
     // })
-    return await planetsModel.find()
+    return await planetsModel.find({}, {'__v': 0, "_id": 0})
 }
 
 async function savePlanet(planet) {
