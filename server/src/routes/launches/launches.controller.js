@@ -12,7 +12,7 @@ async function httpAddNewLaunch(req, res) {
         const validatedLaunch = await launchSchema.validateAsync(newLaunch)
 
         validatedLaunch.launchDate = new Date(newLaunch.launchDate);
-        const createdLaunch = addNewLaunch(validatedLaunch)
+        const createdLaunch = await addNewLaunch(validatedLaunch)
 
         return res.status(201).json(createdLaunch)
     } catch (error) {

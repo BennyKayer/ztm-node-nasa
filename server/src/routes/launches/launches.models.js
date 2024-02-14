@@ -1,11 +1,14 @@
-const joi = require("joi")
+const coreJoi = require("joi")
+const joiDate = require("@joi/date")
 const { launchesModel } = require("./launches.mongo");
 const { planetsModel } = require("../planets/planets.mongo");
+
+const joi = coreJoi.extend(joiDate);
 
 const launchSchema = joi.object({
     mission: joi.string().required(),
     rocket: joi.string().required(),
-    launchDate: joi.date().required(),
+    launchDate: joi.date().format("DD.MM.YYYY").required(),
     destination: joi.string().required(),
 })
 
@@ -33,7 +36,8 @@ async function getLaunches() {
 async function saveLaunch(launch) {
     // Referential integrity check
     // Does the planet even exists?
-    const planet = await planetsModel.findOne({ name: launch.target })
+    console.log(launch);
+    const planet = await planetsModel.findOne({ name: launch.destination })
     if (!planet) {
         throw new Error("No matching planet was found")
     }
@@ -55,7 +59,7 @@ async function addNewLaunch(launch) {
 
 async function deleteLaunch(id) {
     const aborted =  await launchesModel.updateOne({ flightNumber: id}, { upcoming: false, success: false})
-    return aborted.ok === 1 && aborted.nModified === 1;
+    return aborted.modifiedCount === 1;
 }
 
 module.exports = {
