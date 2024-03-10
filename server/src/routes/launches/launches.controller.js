@@ -1,9 +1,11 @@
+const { getPagination } = require('../../utils/query');
 const { getLaunches, addNewLaunch, launchSchema, existsLaunchWithId, deleteLaunch } = require('./launches.models');
 const joi = require("joi")
 
 async function httpGetAllLaunches(req, res) {
     // console.log(Array.from(launches.entries()));
-    return res.status(200).json(await getLaunches());
+    const { skip, limit } = getPagination(req.query);
+    return res.status(200).json(await getLaunches(skip, limit));
 }
 
 async function httpAddNewLaunch(req, res) {
