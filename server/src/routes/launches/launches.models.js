@@ -32,6 +32,7 @@ async function getLatestFlightNumber() {
 async function getLaunches(skip, limit) {
     return await launchesModel.find({}, 
         {'__v': 0, '_id': 0})
+        .sort({ flightNumber: 1 }) // 1 for ascending -1 for descending
         .skip(skip)
         .limit(limit)
 }
