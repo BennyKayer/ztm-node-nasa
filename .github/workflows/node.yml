@@ -1,0 +1,25 @@
+name: NASE Project CI
+# Whole section translates to 
+# run jobs when there's been a push to master
+# or when a pull request to master has opened
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+# These run in parallel, "needs" make then run sequentially like so:
+# deploy:
+#     needs: build
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Node.js version 20
+              uses: actions/setup-node@v3
+              with:
+                node-version: '20'
+            - run: npm install
+            - run: npm run build --prefix client
+
+   
