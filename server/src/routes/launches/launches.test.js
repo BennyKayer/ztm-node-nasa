@@ -1,10 +1,12 @@
 const request = require("supertest")
 const app = require("../../app")
 const { mongoConnect, mongoDisconnect } = require("../../utils/mongo")
+const { loadPlanetsData } = require("../planets/planets.model")
 
 describe("Launches tests", () => {
     beforeAll(async () => {
         await mongoConnect()
+        await loadPlanetsData()
     })
     afterAll(async () => {
         await mongoDisconnect()
